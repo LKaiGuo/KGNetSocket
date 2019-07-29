@@ -1,0 +1,13 @@
+E:\C#_Pro\KGSocket\KGSocket\bin\Debug\KGSocket.exe.config
+E:\C#_Pro\KGSocket\KGSocket\bin\Debug\KGSocket.exe
+E:\C#_Pro\KGSocket\KGSocket\bin\Debug\KGSocket.pdb
+E:\C#_Pro\KGSocket\KGSocket\obj\Debug\KGSocket.csproj.CoreCompileInputs.cache
+E:\C#_Pro\KGSocket\KGSocket\obj\Debug\KGSocket.exe
+E:\C#_Pro\KGSocket\KGSocket\obj\Debug\KGSocket.pdb
+E:\C#_Pro\KGSocket1\KGSocket\obj\Debug\KGSocket.csprojAssemblyReference.cache
+E:\C#_Pro\KGSocket1\KGSocket\obj\Debug\KGSocket.csproj.CoreCompileInputs.cache
+E:\C#_Pro\KGSocket1\KGSocket\obj\Debug\KGSocket.pdb
+E:\C#_Pro\KGSocket1\KGSocket\bin\Debug\KGSocket.dll.config
+E:\C#_Pro\KGSocket1\KGSocket\bin\Debug\KGSocket.dll
+E:\C#_Pro\KGSocket1\KGSocket\bin\Debug\KGSocket.pdb
+E:\C#_Pro\KGSocket1\KGSocket\obj\Debug\KGSocket.dll

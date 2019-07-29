@@ -27,7 +27,7 @@ public class NetData : KGNetData {
             kg.StartCreate("127.0.0.1", 8897);
 ```
 
-###3.发送数据
+### 3.发送数据
 
 就是调用KGNetSession里面的SendData(T)
 
@@ -52,7 +52,7 @@ kg.Client.SendData(new KGNetData { dataname = "123456" });
 
 ```
 
-###5.打印数据的
+### 5.打印数据的
 
 在KGBaseNet里面的   这里是给 在另外一些 Console.WriteLine打印不了留出来用的 
 

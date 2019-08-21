@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Net;
 using System.Net.Sockets;
 
@@ -41,7 +40,9 @@ namespace KGSocket
 
                 //回调开启连接事件
                 OnStartRecive();
+                OnStartReciveEvent?.Invoke();
                 //首先是接收头4个字节确认包长
+                //4可能太小了
                 mKGNetPacket.PacketBuff = new byte[4];
                 mSocket.BeginReceive(mKGNetPacket.PacketBuff, 0, 4, SocketFlags.None, ReciveHeadData, null);
             }
@@ -78,6 +79,7 @@ namespace KGSocket
                     //这里如果是小于4的就是凑不成 就是分包了 要继续接收
                     if (mKGNetPacket.HeadIndex < mKGNetPacket.HeadLength)
                     {
+                        //                                                                            4-？《=4
 
                         mSocket.BeginReceive(mKGNetPacket.PacketBuff, mKGNetPacket.HeadIndex, mKGNetPacket.HeadLength - mKGNetPacket.HeadIndex, SocketFlags.None, ReciveHeadData, null);
                     }
@@ -116,6 +118,7 @@ namespace KGSocket
             {
                 //结束接收获取长度
                 int len = mSocket.EndReceive(ar);
+
                 if (len>0)
                 {
                     mKGNetPacket.PacketIndex += len;
@@ -131,8 +134,10 @@ namespace KGSocket
                     {
                         //这里就可以进行回调函数了
                         OnReciveData(mKGNetPacket.PacketBuff.DeSerialization<T>());
+                        OnReciveDataEvent?.Invoke(mKGNetPacket.PacketBuff.DeSerialization<T>());
 
                         //开始新一轮的从上往下接收了
+                        mKGNetPacket.Refresh();
                         mKGNetPacket.PacketBuff = new byte[4];
                         mSocket.BeginReceive(mKGNetPacket.PacketBuff, 0, 4, SocketFlags.None, ReciveHeadData, null);
                     }
@@ -146,6 +151,7 @@ namespace KGSocket
             catch (Exception e)
             {
                 ("ReciveDataError：" + e).KLog(LogLevel.Err);
+
             }
         
         }
@@ -159,6 +165,12 @@ namespace KGSocket
         {
             //这里转回来 byte[]
             byte[] bytedata = data.PackNetData();
+            byte[] linshi = bytedata;
+            List<byte> bb;
+            bb = bytedata.ToList();
+            bb.RemoveRange(0,4);
+              (bb.Count).ToString().KLog();
+            (bb.ToArray().DeSerialization<T>().ToString()).KLog();
 
             //创建流准备异步写入发送
             NetworkStream network = null;
@@ -211,26 +223,25 @@ namespace KGSocket
         protected void Clear()
         {
             OnDisRecive();
+            OnDisReciveEvent?.Invoke();
             mSocket.Close();
+            mSocket = null;
         }
 
 
         protected virtual void OnReciveData(T data)
         {
-            OnReciveDataEvent?.Invoke(data);
-            ("接收到了一条消息："+data).KLog();
+            
         }
         
         protected virtual void OnDisRecive()
         {
-            OnDisReciveEvent?.Invoke();
-            ("关闭了一个连接：").KLog();
+
         }
 
         protected virtual void OnStartRecive()
         {
-            OnStartReciveEvent?.Invoke();
-            ("开始了一个连接：").KLog();
+            
         }
 
 

@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace KGSocket
 {
@@ -16,6 +15,8 @@ namespace KGSocket
     public  class KGSocketClient<T, R> : KGBaseNet where T : KGNetSession<R>, new() where R : KGNetData
     {
         public T Client;
+        public event Action ConnectErrorEvent;
+
 
         public override void StartCreate(string ip, int port)
         {
@@ -41,11 +42,13 @@ namespace KGSocket
             {
                 mSocket.EndConnect(ar);
                 //连接完成开始接收数据
+                
                 Client.StartReciveData(mSocket,()=> { Client = null; });
             
             }
             catch (Exception e)
             {
+                ConnectErrorEvent?.Invoke();
                 ("ConnectAsyncError：" + e).KLog(LogLevel.Err);
                 
             }

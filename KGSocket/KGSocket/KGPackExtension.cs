@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
@@ -29,6 +28,8 @@ namespace KGSocket
             //using 创建完会自动释放内存 创建流MemoryStream 读消息
             using (MemoryStream ms=new MemoryStream(data))
             {
+                ms.Position = 0;
+              
                 //BinaryFormatter 用来反,序列化流的
                 BinaryFormatter binary = new BinaryFormatter();
                 //反序列成自定义数据类型
@@ -43,7 +44,7 @@ namespace KGSocket
         /// <typeparam name="T"></typeparam>
         /// <param name="data"></param>
         /// <returns></returns>
-        private static byte[] Serialization<T>(this T data) where T : KGNetData
+        public static byte[] Serialization<T>(this T data) where T : KGNetData
         {
             //using 创建完会自动释放内存 创建流MemoryStream 
             using (MemoryStream ms = new MemoryStream())

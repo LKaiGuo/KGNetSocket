@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace KGSocket
 {
@@ -33,7 +32,7 @@ namespace KGSocket
 
         public void Refresh()
         {
-            PacketBuff = null;
+            PacketBuff = new byte[HeadLength];
             PacketIndex = 0;
             HeadIndex = 0;
         }

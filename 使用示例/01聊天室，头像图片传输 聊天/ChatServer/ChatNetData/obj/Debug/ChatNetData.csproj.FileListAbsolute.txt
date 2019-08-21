@@ -1,0 +1,7 @@
+E:\C#_Pro\ChatServer\ChatNetData\bin\Debug\ChatNetData.dll
+E:\C#_Pro\ChatServer\ChatNetData\bin\Debug\ChatNetData.pdb
+E:\C#_Pro\ChatServer\ChatNetData\obj\Debug\ChatNetData.csproj.CoreCompileInputs.cache
+E:\C#_Pro\ChatServer\ChatNetData\obj\Debug\ChatNetData.dll
+E:\C#_Pro\ChatServer\ChatNetData\obj\Debug\ChatNetData.pdb
+E:\C#_Pro\ChatServer\ChatNetData\bin\Debug\KGSocket.dll
+E:\C#_Pro\ChatServer\ChatNetData\obj\Debug\ChatNetData.csproj.CopyComplete

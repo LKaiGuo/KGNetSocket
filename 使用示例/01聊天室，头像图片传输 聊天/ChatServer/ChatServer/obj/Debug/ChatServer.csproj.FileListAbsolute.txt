@@ -1,0 +1,11 @@
+E:\C#_Pro\ChatServer\ChatServer\bin\Debug\ChatServer.exe.config
+E:\C#_Pro\ChatServer\ChatServer\bin\Debug\ChatServer.exe
+E:\C#_Pro\ChatServer\ChatServer\bin\Debug\ChatServer.pdb
+E:\C#_Pro\ChatServer\ChatServer\bin\Debug\ChatNetData.dll
+E:\C#_Pro\ChatServer\ChatServer\bin\Debug\KGSocket.dll
+E:\C#_Pro\ChatServer\ChatServer\bin\Debug\ChatNetData.pdb
+E:\C#_Pro\ChatServer\ChatServer\obj\Debug\ChatServer.csprojAssemblyReference.cache
+E:\C#_Pro\ChatServer\ChatServer\obj\Debug\ChatServer.csproj.CoreCompileInputs.cache
+E:\C#_Pro\ChatServer\ChatServer\obj\Debug\ChatServer.csproj.CopyComplete
+E:\C#_Pro\ChatServer\ChatServer\obj\Debug\ChatServer.exe
+E:\C#_Pro\ChatServer\ChatServer\obj\Debug\ChatServer.pdb

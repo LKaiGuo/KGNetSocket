@@ -9,3 +9,14 @@ E:\C#_Pro\ChatServer\ChatServer\obj\Debug\ChatServer.csproj.CoreCompileInputs.ca
 E:\C#_Pro\ChatServer\ChatServer\obj\Debug\ChatServer.csproj.CopyComplete
 E:\C#_Pro\ChatServer\ChatServer\obj\Debug\ChatServer.exe
 E:\C#_Pro\ChatServer\ChatServer\obj\Debug\ChatServer.pdb
+E:\学习C\socketxxx\使用示例\01聊天室，头像图片传输 聊天\ChatServer\ChatServer\bin\Debug\ChatServer.exe.config
+E:\学习C\socketxxx\使用示例\01聊天室，头像图片传输 聊天\ChatServer\ChatServer\bin\Debug\ChatServer.exe
+E:\学习C\socketxxx\使用示例\01聊天室，头像图片传输 聊天\ChatServer\ChatServer\bin\Debug\ChatServer.pdb
+E:\学习C\socketxxx\使用示例\01聊天室，头像图片传输 聊天\ChatServer\ChatServer\bin\Debug\ChatNetData.dll
+E:\学习C\socketxxx\使用示例\01聊天室，头像图片传输 聊天\ChatServer\ChatServer\bin\Debug\KGSocket.dll
+E:\学习C\socketxxx\使用示例\01聊天室，头像图片传输 聊天\ChatServer\ChatServer\bin\Debug\ChatNetData.pdb
+E:\学习C\socketxxx\使用示例\01聊天室，头像图片传输 聊天\ChatServer\ChatServer\obj\Debug\ChatServer.csprojAssemblyReference.cache
+E:\学习C\socketxxx\使用示例\01聊天室，头像图片传输 聊天\ChatServer\ChatServer\obj\Debug\ChatServer.csproj.CoreCompileInputs.cache
+E:\学习C\socketxxx\使用示例\01聊天室，头像图片传输 聊天\ChatServer\ChatServer\obj\Debug\ChatServer.csproj.CopyComplete
+E:\学习C\socketxxx\使用示例\01聊天室，头像图片传输 聊天\ChatServer\ChatServer\obj\Debug\ChatServer.exe
+E:\学习C\socketxxx\使用示例\01聊天室，头像图片传输 聊天\ChatServer\ChatServer\obj\Debug\ChatServer.pdb

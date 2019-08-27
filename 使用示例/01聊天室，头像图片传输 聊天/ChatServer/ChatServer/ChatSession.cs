@@ -4,12 +4,15 @@ using ChatNetData;
 
 namespace ChatServer
 {
+    /// <summary>
+    /// 这里是每个客户端会话管理
+    /// </summary>
     public class ChatSession : KGNetSession<ChatDatas>
     {
 
         public int SessionID = 0;
-        public string PlayerName;//缓存用户的名字
-        public byte[] HeadData;//缓存用户的头像图片数据
+        public string PlayerName;
+        public byte[] HeadData;
 
         protected override void OnDisRecive()
         {
@@ -18,16 +21,16 @@ namespace ChatServer
         }
         protected override void OnReciveData(ChatDatas data)
         {
-            ("收到名字：" + data.PlayerName + "的请求" + (CMD)data.Cmd).KLog();
-            ChatServe.Instance.AddDataPackQue(this, data);
+            ("收到ID：" + SessionID + "的请求"+(CMD)data.Cmd).KLog();
+            ChatServe.Instance.AddDataPackQue(this,data);
         }
 
         protected override void OnStartRecive()
         {
             SessionID = ChatServe.Instance.GetSessionID();
             ("ID：" + SessionID + "已连接").KLog();
-
-
+       
+          
         }
     }
 }

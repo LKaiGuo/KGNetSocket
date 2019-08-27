@@ -26,7 +26,7 @@ namespace ChatServer
         }
         #endregion
 
-        public static readonly object obj = "lock";
+        public static readonly string obj = "lock";
 
         public Queue<ChatDatasPack> DataPackQue = new Queue<ChatDatasPack>();
 

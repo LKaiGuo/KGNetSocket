@@ -66,6 +66,8 @@ namespace KGSocket
 
                 //如果接收数据长度等于0就是断开连接了 
                 //为啥要加这个勒 在断开的时候 异步会回调一次 直接调用EndReceive 会报错
+                if (mSocket == null)
+                    return;
                 if (mSocket.Available == 0)
                 {
                     Clear();
@@ -165,13 +167,6 @@ namespace KGSocket
         {
             //这里转回来 byte[]
             byte[] bytedata = data.PackNetData();
-            byte[] linshi = bytedata;
-            List<byte> bb;
-            bb = bytedata.ToList();
-            bb.RemoveRange(0,4);
-              (bb.Count).ToString().KLog();
-            (bb.ToArray().DeSerialization<T>().ToString()).KLog();
-
             //创建流准备异步写入发送
             NetworkStream network = null;
 
@@ -220,7 +215,7 @@ namespace KGSocket
     /// <summary>
     /// 网络关闭
     /// </summary>
-        protected void Clear()
+        public void Clear()
         {
             OnDisRecive();
             OnDisReciveEvent?.Invoke();

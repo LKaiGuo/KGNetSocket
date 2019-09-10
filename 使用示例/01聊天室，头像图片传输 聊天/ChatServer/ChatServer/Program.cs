@@ -9,8 +9,9 @@ namespace ChatServer
     {
         static void Main(string[] args)
         {
-            ChatServe chatServe= ChatServe.Instance;
-            chatServe.StartCreate("127.0.0.1",8895);
+            ChatServe chatServe = ChatServe.Instance;
+            string qq = Console.ReadLine();
+            chatServe.StartCreate(qq, 8895);
             while (true)
             {
                 chatServe.Update();

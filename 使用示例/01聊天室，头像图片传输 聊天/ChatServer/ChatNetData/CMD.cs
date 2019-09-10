@@ -9,6 +9,8 @@ namespace ChatNetData
     public enum CMD
     {
         None,
+        HeartBeat,
+
         ReqLogin,
         ReqChatInfo,
 

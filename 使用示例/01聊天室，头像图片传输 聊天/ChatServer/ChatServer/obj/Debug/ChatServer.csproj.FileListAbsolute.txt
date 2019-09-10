@@ -9,3 +9,5 @@ E:\C#_Pro\ChatServer\ChatServer\obj\Debug\ChatServer.csproj.CoreCompileInputs.ca
 E:\C#_Pro\ChatServer\ChatServer\obj\Debug\ChatServer.csproj.CopyComplete
 E:\C#_Pro\ChatServer\ChatServer\obj\Debug\ChatServer.exe
 E:\C#_Pro\ChatServer\ChatServer\obj\Debug\ChatServer.pdb
+E:\C#_Pro\ChatServer\ChatServer\bin\Debug\Tool.dll
+E:\C#_Pro\ChatServer\ChatServer\bin\Debug\Tool.pdb

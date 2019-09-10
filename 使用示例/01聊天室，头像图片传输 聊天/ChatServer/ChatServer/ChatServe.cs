@@ -4,6 +4,7 @@ using System.Linq;
 
 using KGSocket;
 using ChatNetData;
+using KGSocket.Tool;
 
 namespace ChatServer
 {
@@ -53,7 +54,7 @@ namespace ChatServer
         #endregion
 
 
-
+        public KGHeartBeatManage<ChatSession, KGHeartBeat> kGHeartBeatManage;
         public void Update()
         {
             if (DataPackQue.Count > 0)
@@ -66,6 +67,31 @@ namespace ChatServer
             }
         }
 
+        public override void StartCreate(string ip, int port)
+        {
+            base.StartCreate(ip, port);
+            kGHeartBeatManage = new KGHeartBeatManage<ChatSession, KGHeartBeat>(send=> { Console.WriteLine("检测了一次心跳"); },lost=> 
+            {
+                if (lost!=null&& lost.mSocket!=null&& lost.mSocket.Connected)
+                {
+                    (lost.SessionID + "ID心跳包超时 准备断开连接").KLog(LogLevel.Err);
+
+                    lost.Clear();
+                }
+               
+            });
+            //添加新的会话事件
+            AddSessionEvent += v => 
+            {
+                kGHeartBeatManage.AddConnectDic(v);
+            };
+            //删除会话事件
+            RemoveSessionEvent += v =>
+            {
+                kGHeartBeatManage.RemoveConnectDic(v);
+            };
+        }
+
         /// <summary>
         /// 处理客户端发过来的消息
         /// </summary>
@@ -74,6 +100,13 @@ namespace ChatServer
         {
             switch ((CMD)pack.chatDatas.Cmd)
             {
+                //心跳包指令
+                case CMD.HeartBeat:
+                    //更新心跳包
+                    kGHeartBeatManage.UpdateOneHeat(pack.chatSession);
+                    pack.chatSession.SendData(pack.chatDatas);
+                    break;
+
                 //登录指令
                 case CMD.ReqLogin:
                     //判断在线的名字是否重复
@@ -109,6 +142,7 @@ namespace ChatServer
                     //分发到各个客户端 聊天消息
                     SessionList.Where(v => v != pack.chatSession).ToList().ForEach(v =>
                         {
+                            (v.mSocket.Connected).ToString().KLog();
                             v.SendData(pack.chatDatas);
                         });
                     break;

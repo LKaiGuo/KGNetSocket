@@ -1,0 +1,6 @@
+E:\C#_Pro\KGSocket1\Tool\bin\Debug\Tool.dll
+E:\C#_Pro\KGSocket1\Tool\bin\Debug\Tool.pdb
+E:\C#_Pro\KGSocket1\Tool\obj\Debug\Tool.csproj.CoreCompileInputs.cache
+E:\C#_Pro\KGSocket1\Tool\obj\Debug\Tool.dll
+E:\C#_Pro\KGSocket1\Tool\obj\Debug\Tool.pdb
+E:\C#_Pro\KGSocket1\Tool\obj\Debug\Tool.csprojAssemblyReference.cache

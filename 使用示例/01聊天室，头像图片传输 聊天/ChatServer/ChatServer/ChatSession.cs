@@ -1,5 +1,6 @@
 ﻿
 using KGSocket;
+using KGSocket.Tool;
 using ChatNetData;
 
 namespace ChatServer
@@ -14,9 +15,10 @@ namespace ChatServer
         public string PlayerName;
         public byte[] HeadData;
 
+
         protected override void OnDisRecive()
         {
-            ("名字：" + PlayerName + "已下线").KLog();
+            ("ID：" + SessionID + "已下线").KLog();
 
         }
         protected override void OnReciveData(ChatDatas data)

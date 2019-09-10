@@ -14,7 +14,8 @@ namespace KGSocket
         public List<T> SessionList=new List<T>();//储存会话管理的
         public  int NetListen=10;//监听数
 
-
+        public event Action<T> AddSessionEvent;
+        public event Action<T> RemoveSessionEvent;
 
         public override void StartCreate(string ip, int port)
         {
@@ -49,18 +50,32 @@ namespace KGSocket
                 Client.StartReciveData(sk,
                     ()=> 
                     {
+                        RemoveSession(Client);
+                        RemoveSessionEvent?.Invoke(Client);
                         SessionList.Remove(Client);
                     });
                 //添加进SessionList储存
                 SessionList.Add(Client);
+                AddSession(Client);
+                AddSessionEvent?.Invoke(Client);
+
                 //开始新一轮接收连接
                 mSocket.BeginAccept(ConnectAsync, null);
             }
             catch (Exception e)
             {
                 ("ConnectAsyncError：" + e).KLog(LogLevel.Err);
-
+                mSocket?.BeginAccept(ConnectAsync, null);
             }
+        }
+
+        public virtual void AddSession(T obj)
+        {
+
+        }
+        public virtual void RemoveSession(T obj)
+        {
+
         }
     }
 }

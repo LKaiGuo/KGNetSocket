@@ -92,7 +92,7 @@ kg.Client.SendData(new KGNetData { dataname = "123456" });
 
 - #### 添加 删除 监听中的心跳包
  - ```
-   AddConnectDic/RemoveConnectDic(T obj)   T就是KGHeartBeatManage定义的T 会话管理类
+   KGHeartBeatManage.AddConnectDic/RemoveConnectDic(T obj)   T就是KGHeartBeatManage定义的T 会话管理类
    ```
 
 ## -------------------------------------------------------------------------------------------------------------

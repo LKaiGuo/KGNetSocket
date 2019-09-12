@@ -70,16 +70,18 @@ namespace ChatServer
         public override void StartCreate(string ip, int port)
         {
             base.StartCreate(ip, port);
-            kGHeartBeatManage = new KGHeartBeatManage<ChatSession, KGHeartBeat>(send=> { Console.WriteLine("检测了一次心跳"); },lost=> 
+            kGHeartBeatManage = new KGHeartBeatManage<ChatSession, KGHeartBeat>().InitTimerEvent(null, lost =>
             {
-                if (lost!=null&& lost.mSocket!=null&& lost.mSocket.Connected)
+                if (lost != null && lost.mSocket != null && lost.mSocket.Connected)
                 {
                     (lost.SessionID + "ID心跳包超时 准备断开连接").KLog(LogLevel.Err);
 
                     lost.Clear();
                 }
-               
-            });
+
+            }).StartTimer();
+
+
             //添加新的会话事件
             AddSessionEvent += v => 
             {

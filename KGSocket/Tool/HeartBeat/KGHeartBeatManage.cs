@@ -7,12 +7,13 @@ using System.Linq;
 
 namespace KGSocket.Tool
 {
-    public class KGHeartBeatManage<T,R>:IDisposable where R:KGHeartBeat,new()
+    public class KGHeartBeatManage<T, R> : IDisposable where R : KGHeartBeat, new()
     {
-     
+
 
         //主定时器
-        System.Timers.Timer timer;
+        public System.Timers.Timer Checktimer;
+        public System.Timers.Timer Sendtimer;
 
         private readonly object mlock = new object();
 
@@ -28,51 +29,107 @@ namespace KGSocket.Tool
 
         public Dictionary<T, R> ConnectDic { get => connectDic; protected set => connectDic = value; }
 
-        public KGHeartBeatManage(Action<T> sendHearEvent, Action<T> connectLostEvent, double timeinterval=1000)
+
+
+        public virtual KGHeartBeatManage<T, R> InitTimerEvent(Action<T> sendHearEvent, Action<T> connectLostEvent, double Checkinterval = 1000, double Sendinterval = 1000)
         {
-
-
             //这里是赋值每过多少秒执行一次事件
-            timer = new System.Timers.Timer(timeinterval);
+            Checktimer = new System.Timers.Timer(Checkinterval);
+            Sendtimer = new System.Timers.Timer(Sendinterval);
+
 
             SendHearEvent = sendHearEvent;
             ConnectLostEvent = connectLostEvent;
 
             //定时执行事件
-            timer.Elapsed +=(v,f) => 
+            Checktimer.Elapsed += (v, f) =>
+            {
+                //遍历每个会话回调一次检查心跳包
+               
+                    CheckHeartBeat();
+                
+
+            };
+
+            //定时执行事件
+            Sendtimer.Elapsed += (v, f) =>
             {
                 //遍历每个会话回调一次发送心跳包
                 lock (mlock)
                 {
-                    if (ConnectDic.Count > 0)
-                    {
-                        List<T> RemoveList = new List<T>();
-                        foreach (KeyValuePair<T, R> item in ConnectDic)
-                        {
-                            SendHearEvent?.Invoke(item.Key);
-
-                            //检查 心跳包超时 如果超时满次数就移除并回调事件
-                            item.Value.CheckHeat();
-                            if (item.Value.Lostcount >= item.Value.MaxLostcount)
-                            {
-                                RemoveList.Add(item.Key);
-                               
-                            }
-                            RemoveList.ForEach(remove=> 
-                            {
-                                ConnectLostEvent(remove);
-                                ConnectDic.Remove(remove);
-                            });
-                        }
-                    }
+                    SendHeartBeat();
                 }
-              
+
             };
 
-            timer.Start();
+            return this;
         }
-      
-        
+
+        public virtual KGHeartBeatManage<T, R> StartTimer()
+        {
+            Checktimer.Start();
+            Sendtimer.Start();
+            return this;
+        }
+
+        public virtual KGHeartBeatManage<T, R> StopTimer()
+        {
+            Checktimer.Stop();
+            Sendtimer.Stop();
+            return this;
+        }
+
+
+        /// <summary>
+        /// 发送心跳包
+        /// </summary>
+        public virtual void SendHeartBeat()
+        {
+            lock (mlock)
+            {
+                if (ConnectDic.Count > 0&& SendHearEvent!=null)
+                {
+                    List<T> RemoveList = new List<T>();
+                    foreach (KeyValuePair<T, R> item in ConnectDic)
+                    {
+                        SendHearEvent?.Invoke(item.Key);
+
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 检查心跳包
+        /// </summary>
+        public virtual void CheckHeartBeat()
+        {
+            lock (mlock)
+            {
+                if (ConnectDic.Count > 0)
+                {
+                    List<T> RemoveList = new List<T>();
+                    foreach (KeyValuePair<T, R> item in ConnectDic)
+                    {
+                       
+
+                        //检查 心跳包超时 如果超时满次数就移除并回调事件
+                        item.Value.CheckHeat();
+                        if (item.Value.Lostcount >= item.Value.MaxLostcount)
+                        {
+                            RemoveList.Add(item.Key);
+
+                        }
+                        RemoveList.ForEach(remove =>
+                        {
+                            ConnectLostEvent(remove);
+                            ConnectDic.Remove(remove);
+                        });
+                    }
+                }
+            }
+        }
+
         /// <summary>
         /// 添加存储新的心跳包
         /// </summary>
@@ -80,10 +137,9 @@ namespace KGSocket.Tool
         /// <param name="heart"></param>
         /// <param name="maxlosttime"></param>
         /// <param name="maxlost"></param>
-        public virtual KGHeartBeatManage<T,R> AddConnectDic(T obj,R heart=null, double maxlosttime = 2, int maxlost = 3)
+        public  KGHeartBeatManage<T, R> AddConnectDic(T obj, R heart = null, double maxlosttime = 2, int maxlost = 3)
         {
-            R heartBeat;
-            heartBeat = heart==null? new KGHeartBeat(maxlosttime, maxlost) as R : heart;
+            R heartBeat= new R().InitMax<R>(maxlosttime,maxlost);
 
             lock (mlock)
             {
@@ -94,16 +150,18 @@ namespace KGSocket.Tool
         }
 
 
-        public void RemoveConnectDic(T obj)
+        public KGHeartBeatManage<T, R> RemoveConnectDic(T obj)
         {
             lock (mlock)
             {
                 ConnectDic.Remove(obj);
             }
+
+            return this;
         }
 
         /// <summary>
-        /// 遍历更新某个心跳包
+        /// 更新指定会话对应的心跳包
         /// </summary>
         /// <param name="obj"></param>
         public void UpdateOneHeat(T obj)
@@ -116,8 +174,8 @@ namespace KGSocket.Tool
 
         public void Dispose()
         {
-            timer.Dispose();
-            
+            Checktimer.Dispose();
+            Sendtimer.Dispose();
         }
 
     }

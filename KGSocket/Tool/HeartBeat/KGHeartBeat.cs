@@ -22,15 +22,15 @@ namespace KGSocket.Tool
         //计算时间差的
         public long NowTimeSpan => Convert.ToInt64((DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, 0)).TotalSeconds);
 
-
         /// <summary>
         /// 检查心跳包延时
         /// </summary>
         public virtual void CheckHeat()
         {
-            if (Math.Abs(lastHeartTime - NowTimeSpan) > MaxLostTime)
+            if (Math.Abs(lastHeartTime - this.NowTimeSpan) > MaxLostTime)
             {
-                lastHeartTime = NowTimeSpan;
+               
+                lastHeartTime = this.NowTimeSpan;
                 Lostcount++;
             }
         }
@@ -41,24 +41,26 @@ namespace KGSocket.Tool
         /// </summary>
         public virtual void UpdateHeat()
         {
-            lastHeartTime = NowTimeSpan;
+            lastHeartTime = this.NowTimeSpan;
             Lostcount = 0;
         }
 
-
-        public  KGHeartBeat(double maxlosttime = 2, int maxlost = 3)
+        public virtual T InitMax<T>(double maxlosttime = 2, int maxlost = 3) where T: KGHeartBeat
         {
-          
             MaxLostTime = maxlosttime;
             MaxLostcount = maxlost;
-            lastHeartTime = NowTimeSpan;
-
+            //第一次赋值肯定要刷新
+            lastHeartTime = this.NowTimeSpan;
+            return this as T;
         }
 
-        public KGHeartBeat()
+        public virtual void InitMax(double maxlosttime = 2, int maxlost = 3) 
         {
-
-
+            MaxLostTime = maxlosttime;
+            MaxLostcount = maxlost;
+            //第一次赋值肯定要刷新
+            lastHeartTime = this.NowTimeSpan;
         }
+
     }
 }

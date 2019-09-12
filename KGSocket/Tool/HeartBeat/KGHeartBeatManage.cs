@@ -137,7 +137,7 @@ namespace KGSocket.Tool
         /// <param name="heart"></param>
         /// <param name="maxlosttime"></param>
         /// <param name="maxlost"></param>
-        public  KGHeartBeatManage<T, R> AddConnectDic(T obj, R heart = null, double maxlosttime = 2, int maxlost = 3)
+        public  KGHeartBeatManage<T, R> AddConnectDic(T obj,  double maxlosttime = 2, int maxlost = 3)
         {
             R heartBeat= new R().InitMax<R>(maxlosttime,maxlost);
 

@@ -85,9 +85,9 @@ kg.Client.SendData(new KGNetData { dataname = "123456" });
 
   - ```
 
-   new KGHeartBeatManage<T, R>(T=> { T就是传进来的会话管理 这里主要做发送心跳包的 },T=> 
+   new KGHeartBeatManage<T, R>().InitTimerEvent(T=> { T就是传进来的会话管理 这里主要做发送心跳包的 },T=> 
             {第二个委托 就是超过心跳包超时一定次数触发，直接调用会话管理关掉就好}
-            ,每多少毫秒触发一次 发送心跳包和检测心跳包);
+            ,每多少毫秒触发一次 发送心跳包和检测心跳包).StartTimer();
      ```
 
 - #### 添加 删除 监听中的心跳包
